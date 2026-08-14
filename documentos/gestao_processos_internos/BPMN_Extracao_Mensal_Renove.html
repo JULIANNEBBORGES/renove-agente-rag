@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>BPMN — Extração Mensal de Relatórios de Desempenho</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; background:#ffffff; color:#1a1a1a; margin:0; padding:32px 40px 60px; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 4px; }
+  h2 { font-size:15px; font-weight:600; margin:36px 0 10px; color:#1F4E79; }
+  p.sub { font-size:13px; color:#555; margin:0 0 24px; }
+  .diagram-wrap { border:1px solid #e0e0e0; border-radius:8px; padding:16px; overflow-x:auto; }
+  .legend { display:flex; flex-wrap:wrap; gap:18px; font-size:12px; color:#333; margin-top:14px; padding-top:12px; border-top:1px solid #eee; }
+  .legend span.sym { display:inline-block; width:14px; height:14px; margin-right:6px; vertical-align:middle; border-radius:3px; }
+  .legend div { display:flex; align-items:center; }
+  text { font-family: Arial, Helvetica, sans-serif; }
+</style>
+</head>
+<body>
+
+<h1>Mapa de processo (BPMN) — Extração Mensal de Relatórios de Desempenho</h1>
+<p class="sub">Renove Lavanderias (Matriz, Filial 1, Filial 2) · Visão S.Org · Versão 1.0</p>
+
+<h2>Nível 1 — Visão macro do ciclo mensal</h2>
+<div class="diagram-wrap">
+<svg width="100%" viewBox="0 0 1500 230" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Visão macro do ciclo mensal de extração</title>
+<defs>
+  <marker id="arrow1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Start event -->
+<circle cx="80" cy="115" r="24" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+<text x="80" y="120" text-anchor="middle" font-size="10" fill="#085041">Início</text>
+<text x="80" y="165" text-anchor="middle" font-size="11" fill="#333">Início do ciclo</text>
+<text x="80" y="179" text-anchor="middle" font-size="11" fill="#333">mensal</text>
+
+<line x1="104" y1="115" x2="204" y2="115" stroke="#444" stroke-width="1.6" marker-end="url(#arrow1)"/>
+
+<!-- Subprocess: extrair por loja -->
+<rect x="204" y="55" width="290" height="120" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+<rect x="211" y="62" width="276" height="106" rx="7" fill="none" stroke="#185FA5" stroke-width="1"/>
+<text x="349" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#0C447C">Extrair relatórios da loja</text>
+<text x="349" y="115" text-anchor="middle" font-size="11" fill="#0C447C">(subprocesso)</text>
+<text x="349" y="135" text-anchor="middle" font-size="11" fill="#333">Repete ×3 — Matriz,</text>
+<text x="349" y="149" text-anchor="middle" font-size="11" fill="#333">Filial 1, Filial 2</text>
+<!-- multi-instance marker -->
+<g transform="translate(340,158)">
+  <rect x="0" y="0" width="3" height="12" fill="#0C447C"/>
+  <rect x="6" y="0" width="3" height="12" fill="#0C447C"/>
+  <rect x="12" y="0" width="3" height="12" fill="#0C447C"/>
+</g>
+
+<line x1="494" y1="115" x2="594" y2="115" stroke="#444" stroke-width="1.6" marker-end="url(#arrow1)"/>
+
+<!-- Task: dados complementares -->
+<rect x="594" y="65" width="270" height="100" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="729" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Registrar dados</text>
+<text x="729" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">complementares</text>
+<text x="729" y="145" text-anchor="middle" font-size="11" fill="#555">Presença, transferências</text>
+<text x="729" y="159" text-anchor="middle" font-size="11" fill="#555">e afastamentos</text>
+
+<line x1="864" y1="115" x2="964" y2="115" stroke="#444" stroke-width="1.6" marker-end="url(#arrow1)"/>
+
+<!-- Task: consolidar e enviar -->
+<rect x="964" y="60" width="290" height="110" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="1109" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Consolidar e enviar</text>
+<text x="1109" y="120" text-anchor="middle" font-size="11" fill="#555">15 arquivos + planilha</text>
+<text x="1109" y="134" text-anchor="middle" font-size="11" fill="#555">Av_Desempenho atual</text>
+<text x="1109" y="152" text-anchor="middle" font-size="11" fill="#555">+ pedido de revisão</text>
+
+<line x1="1254" y1="115" x2="1354" y2="115" stroke="#444" stroke-width="1.6" marker-end="url(#arrow1)"/>
+
+<!-- End event -->
+<circle cx="1400" cy="115" r="24" fill="#FAECE7" stroke="#993C1D" stroke-width="3"/>
+<text x="1400" y="120" text-anchor="middle" font-size="10" fill="#712B13">Fim</text>
+<text x="1400" y="165" text-anchor="middle" font-size="11" fill="#333">Fim do ciclo</text>
+<text x="1400" y="179" text-anchor="middle" font-size="11" fill="#333">mensal</text>
+
+</svg>
+</div>
+
+<h2>Nível 2 — Detalhe do subprocesso "Extrair relatórios da loja" (executado 1× por loja)</h2>
+<p class="sub">Sistema único — Renov.net Adm. Ordem A a E definida pela proximidade das trilhas de menu dentro do próprio Renov.net.</p>
+<div class="diagram-wrap">
+<svg width="100%" viewBox="0 0 1800 260" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Detalhe do subprocesso de extração por loja, raia única Renov.net Adm, cinco relatórios em sequência</title>
+<defs>
+  <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Pool title -->
+<text x="20" y="24" font-size="12" font-weight="600" fill="#333">Loja selecionada: Matriz, Filial 1 ou Filial 2 (repetir o subprocesso completo para cada uma)</text>
+
+<!-- Lane background -->
+<rect x="0" y="40" width="1800" height="200" fill="#F7FAFD"/>
+<line x1="0" y1="40" x2="1800" y2="40" stroke="#ccc" stroke-width="1"/>
+<line x1="0" y1="240" x2="1800" y2="240" stroke="#ccc" stroke-width="1"/>
+<line x1="140" y1="40" x2="140" y2="240" stroke="#ccc" stroke-width="1"/>
+<text x="70" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#185FA5" transform="rotate(-90 70 140)">Renov.net Adm</text>
+
+<!-- Start -->
+<circle cx="200" cy="140" r="22" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+<text x="200" y="144" text-anchor="middle" font-size="9" fill="#085041">Início</text>
+<text x="200" y="188" text-anchor="middle" font-size="10" fill="#333">Subprocesso</text>
+
+<line x1="222" y1="140" x2="298" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- Task A: Pacotes -->
+<rect x="298" y="95" width="212" height="90" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="404" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">A · Pacotes</text>
+<text x="404" y="148" text-anchor="middle" font-size="11" fill="#555">Relatório de Tickets</text>
+<text x="404" y="164" text-anchor="middle" font-size="11" fill="#555">Extrair e salvar</text>
+
+<line x1="510" y1="140" x2="568" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- Task B: PG -->
+<rect x="568" y="95" width="202" height="90" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="669" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">B · PG</text>
+<text x="669" y="148" text-anchor="middle" font-size="11" fill="#555">Panorama Geral</text>
+<text x="669" y="164" text-anchor="middle" font-size="11" fill="#555">Extrair e salvar</text>
+
+<line x1="770" y1="140" x2="828" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- Task C: DPGMTO -->
+<rect x="828" y="95" width="232" height="90" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="944" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">C · DPGMTO</text>
+<text x="944" y="148" text-anchor="middle" font-size="11" fill="#555">Forma de Pagamento</text>
+<text x="944" y="164" text-anchor="middle" font-size="11" fill="#555">Extrair e salvar</text>
+
+<line x1="1060" y1="140" x2="1118" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- Task D: DMO -->
+<rect x="1118" y="95" width="202" height="90" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="1219" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">D · DMO</text>
+<text x="1219" y="148" text-anchor="middle" font-size="11" fill="#555">Por Operador</text>
+<text x="1219" y="164" text-anchor="middle" font-size="11" fill="#555">Extrair e salvar</text>
+
+<line x1="1320" y1="140" x2="1378" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- Task E: Passadoria -->
+<rect x="1378" y="95" width="242" height="90" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.4"/>
+<text x="1499" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">E · Passadoria</text>
+<text x="1499" y="148" text-anchor="middle" font-size="11" fill="#555">Produção por Operador</text>
+<text x="1499" y="164" text-anchor="middle" font-size="11" fill="#555">Extrair e salvar</text>
+
+<line x1="1620" y1="140" x2="1678" y2="140" stroke="#444" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+<!-- End -->
+<circle cx="1720" cy="140" r="22" fill="#FAECE7" stroke="#993C1D" stroke-width="3"/>
+<text x="1720" y="144" text-anchor="middle" font-size="9" fill="#712B13">Fim</text>
+<text x="1720" y="188" text-anchor="middle" font-size="10" fill="#333">Subprocesso</text>
+
+</svg>
+
+<div class="legend">
+  <div><span class="sym" style="background:#E1F5EE;border:2px solid #0F6E56;border-radius:50%;"></span>Evento de início</div>
+  <div><span class="sym" style="background:#FAECE7;border:3px solid #993C1D;border-radius:50%;"></span>Evento de fim</div>
+  <div><span class="sym" style="background:#fff;border:1.4px solid #185FA5;"></span>Tarefa</div>
+  <div>Todos os 5 relatórios usam o mesmo sistema (Renov.net Adm) — raia única</div>
+</div>
+</div>
+
+</body>
+</html>

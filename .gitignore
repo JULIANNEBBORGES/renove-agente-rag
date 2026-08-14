@@ -1,0 +1,19 @@
+# Segredos - nunca versionar
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Índice vetorial gerado (reproduzível via vectorize.py, não precisa versionar o binário)
+agente/faiss_index.bin
+agente/faiss_meta.json
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store

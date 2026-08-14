@@ -1,0 +1,71 @@
+# Renove Lavanderias — Agente RAG (Challenge AluraAgente)
+
+Repositório do desafio "Challenge AluraAgente" (ONE IA FOR TECH), com um agente de IA baseado em RAG
+focado no **colaborador interno** da Renove Lavanderias Especializada (empresa fictícia) — não trata
+de atendimento a cliente externo.
+
+## Estrutura de pastas
+
+```
+repo_renove/
+├── documentos/
+│   └── gestao_processos_internos/   # Regras de negócio, BPMN, tutorial de extração
+├── docs_treinamento/                # Guias técnicos (fibras, peles, segurança, etc.)
+├── dados/                           # Planilha de desempenho + exemplo de relatório bruto
+├── agente/
+│   ├── ingest.py                    # Extrai e faz chunking dos documentos de texto
+│   ├── vectorize.py                 # Gera embeddings (Gemini) e indexa no FAISS
+│   ├── retrieval.py                 # Busca semântica no índice FAISS
+│   ├── numeric_data.py              # Carrega a planilha de desempenho com pandas
+│   └── rag_agent.py                 # Orquestra roteamento + geração de resposta
+├── app.py                           # Interface de chat (Streamlit)
+├── requirements.txt
+└── .env.example
+```
+
+## Como rodar localmente
+
+1. Instale as dependências:
+   ```
+   pip install -r requirements.txt
+   ```
+2. Copie `.env.example` para `.env` e cole sua chave do Gemini (gere em
+   [aistudio.google.com](https://aistudio.google.com)).
+3. Gere os chunks de texto dos documentos:
+   ```
+   cd agente && python ingest.py
+   ```
+4. Gere os embeddings e o índice vetorial (consome sua chave — ~27 chamadas):
+   ```
+   python vectorize.py
+   ```
+5. Volte pra raiz do projeto e rode o app:
+   ```
+   cd .. && streamlit run app.py
+   ```
+
+## Fontes de conhecimento do agente
+
+| Fonte | Tipo de pergunta que responde |
+|---|---|
+| Regras de negócio + BPMN | Políticas e processos (ex.: regras de assiduidade) |
+| Tutorial de extração | Como os dados são exportados/salvos (perguntas administrativas) |
+| Planilha de desempenho | Perguntas numéricas (produção, faturamento, % de meta) |
+| Guias de treinamento | Conhecimento técnico operacional (fibras, tecidos, segurança) |
+
+> ⚠️ **Atenção — dados fictícios**: todos os nomes de colaboradores, clientes e dados operacionais
+> neste repositório são fictícios, construídos a partir da estrutura de processos reais da empresa,
+> mas sem qualquer informação pessoal real. Ver `documentos/gestao_processos_internos/Regras_Negocio_Renove.md`
+> para pendências de conteúdo.
+
+## Stack do agente
+
+- **Embeddings + geração de resposta**: Google Gemini API (tier gratuito)
+- **Vector store**: FAISS ou ChromaDB (local, embutido na aplicação)
+- **Dados numéricos**: planilha carregada com pandas diretamente no app
+- **Interface**: Streamlit
+- **Hospedagem**: Streamlit Community Cloud, deploy direto a partir deste repositório
+
+## Deploy
+
+*(em andamento — print/vídeo do agente rodando na nuvem será adicionado aqui)*
