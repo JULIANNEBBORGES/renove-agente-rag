@@ -33,7 +33,7 @@ import retrieval
 
 load_dotenv()
 
-GERACAO_MODEL = "gemini-2.5-flash"
+GERACAO_MODEL = "gemini-3.6-flash"
 
 _cliente_cache = None
 _dataframes_cache = None
