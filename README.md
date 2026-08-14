@@ -1,8 +1,7 @@
 # Renove Lavanderias — Agente RAG (Challenge AluraAgente)
 
 Repositório do desafio "Challenge AluraAgente" (ONE IA FOR TECH), com um agente de IA baseado em RAG
-focado no **colaborador interno** da Renove Lavanderias Especializada (empresa fictícia) — não trata
-de atendimento a cliente externo.
+focado no **colaborador interno** da Renove Lavanderia Especializada (empresa fictícia).
 
 ## Estrutura de pastas
 
