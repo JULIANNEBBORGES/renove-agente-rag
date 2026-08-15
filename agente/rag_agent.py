@@ -169,6 +169,26 @@ _BUILTINS_PERMITIDOS = {
 }
 
 
+def _resultado_valido(resultado) -> bool:
+    """
+    Verifica se o resultado calculado é utilizável, e não um vazio disfarçado
+    (NaN, None, string vazia, Series/DataFrame vazio ou só de NaN).
+    Isso evita que o agente "formate" um vazio como se fosse uma resposta real.
+    """
+    if resultado is None:
+        return False
+    if isinstance(resultado, float) and pd.isna(resultado):
+        return False
+    if isinstance(resultado, (pd.Series, pd.DataFrame)):
+        if resultado.empty:
+            return False
+        if resultado.isna().all().all() if isinstance(resultado, pd.DataFrame) else resultado.isna().all():
+            return False
+    if isinstance(resultado, str) and resultado.strip() in ("", "-", "—", "nan", "NaN"):
+        return False
+    return True
+
+
 def _executar_consulta_numerica(cliente: genai.Client, pergunta: str):
     dataframes, esquema = _dataframes()
 
@@ -185,6 +205,8 @@ def _executar_consulta_numerica(cliente: genai.Client, pergunta: str):
     namespace = {"pd": pd, **dataframes}
     try:
         resultado = eval(expressao, {"__builtins__": _BUILTINS_PERMITIDOS}, namespace)
+        if not _resultado_valido(resultado):
+            return None, expressao
         return resultado, expressao
     except Exception:
         return None, expressao
