@@ -52,15 +52,23 @@ def carregar_dataframes() -> dict:
     return dataframes
 
 
-def resumo_esquema(dataframes: dict, linhas_amostra: int = 6) -> str:
+def resumo_esquema(dataframes: dict, linhas_amostra: int = 8) -> str:
     """
     Gera um resumo em texto do esquema de cada DataFrame (nome, dimensões e
     amostra de linhas), pra dar contexto ao Gemini na hora de gerar a consulta.
+
+    Para DataFrames pequenos (até 20 linhas, como as abas por operadora, que têm
+    só 14 linhas cobrindo os 12 meses), mostra a tabela INTEIRA em vez de só as
+    primeiras linhas — senão o Gemini não enxerga meses como julho/agosto e
+    "chuta" a posição errada.
     """
     partes = []
     for nome, df in dataframes.items():
         partes.append(f"### DataFrame `{nome}` ({df.shape[0]} linhas x {df.shape[1]} colunas)")
-        amostra = df.head(linhas_amostra).to_string(index=True, max_colwidth=25)
+        if df.shape[0] <= 20:
+            amostra = df.to_string(index=True, max_colwidth=25)
+        else:
+            amostra = df.head(linhas_amostra).to_string(index=True, max_colwidth=25)
         partes.append(amostra)
         partes.append("")
     return "\n".join(partes)

@@ -151,8 +151,16 @@ desempenho de uma empresa de lavanderia com 3 lojas (Matriz, Filial 1, Filial 2)
 Os dados são brutos (cabeçalhos podem não estar na linha 0, valores podem ter texto
 como "R$" ou "—" para ausência de dado) — considere isso ao escrever a expressão.
 
-Esquema disponível:
+Esquema disponível (com o conteúdo completo das tabelas menores):
 {esquema}
+
+Regras importantes:
+- NUNCA use .iloc com posição fixa adivinhada para localizar um mês ou nome — use
+  filtragem por igualdade no valor da célula, ex.: df[df[0] == 'JULHO'][1].values[0]
+  (o mês/nome pode estar em qualquer linha, a posição varia entre abas).
+- Para pegar um valor único de uma célula já filtrada, use .values[0] ou .item()
+  no final, não deixe uma Series inteira como resultado.
+- Se o valor encontrado for um texto tipo "—" ou "-", trate como ausência de dado.
 
 Escreva APENAS uma expressão Python válida (uma linha, sem explicação, sem markdown)
 que calcule a resposta para a pergunta abaixo, usando os nomes de DataFrame exatamente
