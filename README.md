@@ -1,7 +1,8 @@
 # Renove Lavanderias — Agente RAG (Challenge AluraAgente)
 
 Repositório do desafio "Challenge AluraAgente" (ONE IA FOR TECH), com um agente de IA baseado em RAG
-focado no **colaborador interno** da Renove Lavanderia Especializada (empresa fictícia).
+focado no **colaborador interno** da Renove Lavanderias Especializada (empresa fictícia) — não trata
+de atendimento a cliente externo.
 
 ## Estrutura de pastas
 
@@ -10,13 +11,11 @@ repo_renove/
 ├── documentos/
 │   └── gestao_processos_internos/   # Regras de negócio, BPMN, tutorial de extração
 ├── docs_treinamento/                # Guias técnicos (fibras, peles, segurança, etc.)
-├── dados/                           # Planilha de desempenho + exemplo de relatório bruto
 ├── agente/
 │   ├── ingest.py                    # Extrai e faz chunking dos documentos de texto
 │   ├── vectorize.py                 # Gera embeddings (Gemini) e indexa no FAISS
 │   ├── retrieval.py                 # Busca semântica no índice FAISS
-│   ├── numeric_data.py              # Carrega a planilha de desempenho com pandas
-│   └── rag_agent.py                 # Orquestra roteamento + geração de resposta
+│   └── rag_agent.py                 # Orquestra busca + geração de resposta
 ├── app.py                           # Interface de chat (Streamlit)
 ├── requirements.txt
 └── .env.example
@@ -49,8 +48,14 @@ repo_renove/
 |---|---|
 | Regras de negócio + BPMN | Políticas e processos (ex.: regras de assiduidade) |
 | Tutorial de extração | Como os dados são exportados/salvos (perguntas administrativas) |
-| Planilha de desempenho | Perguntas numéricas (produção, faturamento, % de meta) |
 | Guias de treinamento | Conhecimento técnico operacional (fibras, tecidos, segurança) |
+
+> 📌 **Nota de escopo — planilha de desempenho**: a consulta numérica à planilha
+> `Av_Desempenho_Renove.xlsx` foi retirada do escopo do agente. A planilha de origem
+> apresentava problemas de qualidade de dados (fórmulas com cache desatualizado,
+> estrutura irregular entre abas) que tornavam respostas numéricas confiáveis
+> inviáveis dentro do prazo do desafio. Decisão consciente, priorizando um agente
+> menor mas confiável em vez de um recurso adicional frágil.
 
 > ⚠️ **Atenção — dados fictícios**: todos os nomes de colaboradores, clientes e dados operacionais
 > neste repositório são fictícios, construídos a partir da estrutura de processos reais da empresa,
@@ -60,8 +65,7 @@ repo_renove/
 ## Stack do agente
 
 - **Embeddings + geração de resposta**: Google Gemini API (tier gratuito)
-- **Vector store**: FAISS ou ChromaDB (local, embutido na aplicação)
-- **Dados numéricos**: planilha carregada com pandas diretamente no app
+- **Vector store**: FAISS (local, embutido na aplicação)
 - **Interface**: Streamlit
 - **Hospedagem**: Streamlit Community Cloud, deploy direto a partir deste repositório
 

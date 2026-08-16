@@ -31,7 +31,7 @@ st.set_page_config(page_title="Renov.net — Agente Interno", page_icon="🧺", 
 st.title("🧺 Renov.net — Agente de Conhecimento Interno")
 st.caption(
     "Converse com um agente de IA (não uma pessoa) sobre regras de assiduidade, "
-    "processos de extração de relatórios, guias técnicos e dados de desempenho "
+    "processos de extração de relatórios e guias técnicos "
     "da Renove Lavanderias. Respostas baseadas apenas nos documentos internos."
 )
 
@@ -65,6 +65,7 @@ if pergunta:
                 resposta_texto = resultado["resposta"]
                 fontes = resultado.get("fontes", [])
             except Exception as e:
+                resultado = {}
                 resposta_texto = (
                     "Ocorreu um erro ao consultar o agente. Tente novamente em instantes. "
                     f"(detalhe técnico: {e})"
@@ -74,6 +75,12 @@ if pergunta:
         st.markdown(resposta_texto)
         if fontes:
             st.caption("📎 Fontes: " + ", ".join(fontes))
+        if resultado.get("_debug_expressao"):
+            with st.expander("🔧 Detalhes técnicos (consulta gerada)"):
+                st.code(resultado["_debug_expressao"], language="python")
+        if resultado_completo.get("_debug_expressao"):
+            with st.expander("🔧 Detalhes técnicos (consulta gerada)"):
+                st.code(resultado_completo["_debug_expressao"], language="python")
 
     st.session_state.historico.append(
         {"role": "assistant", "conteudo": resposta_texto, "fontes": fontes}
@@ -84,7 +91,7 @@ with st.sidebar:
     st.markdown(
         "- 🤖 Você está falando com uma **IA**, não uma pessoa.\n"
         "- 📚 Fontes: regras de assiduidade, BPMN do processo mensal, tutorial de "
-        "extração, guias técnicos de treinamento e a planilha de desempenho.\n"
+        "extração e guias técnicos de treinamento.\n"
         "- ⚠️ Se o agente não encontrar a informação, ele avisa em vez de arriscar "
         "uma resposta incorreta."
     )
