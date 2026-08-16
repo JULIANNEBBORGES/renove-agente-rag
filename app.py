@@ -75,12 +75,6 @@ if pergunta:
         st.markdown(resposta_texto)
         if fontes:
             st.caption("📎 Fontes: " + ", ".join(fontes))
-        if resultado.get("_debug_expressao"):
-            with st.expander("🔧 Detalhes técnicos (consulta gerada)"):
-                st.code(resultado["_debug_expressao"], language="python")
-        if resultado_completo.get("_debug_expressao"):
-            with st.expander("🔧 Detalhes técnicos (consulta gerada)"):
-                st.code(resultado_completo["_debug_expressao"], language="python")
 
     st.session_state.historico.append(
         {"role": "assistant", "conteudo": resposta_texto, "fontes": fontes}
