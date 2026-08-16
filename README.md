@@ -71,4 +71,6 @@ repo_renove/
 
 ## Deploy
 
-*(em andamento — print/vídeo do agente rodando na nuvem será adicionado aqui)*
+<img width="1906" height="990" alt="RENOV NET_AGENTE_1" src="https://github.com/user-attachments/assets/22a889f1-793f-4be5-98a7-2200d1b5c589" />
+<img width="1709" height="994" alt="RENOV NET_AGENTE_2" src="https://github.com/user-attachments/assets/b44f8a20-7f35-4580-b0c3-b4c1ef8b4bc7" />
+
